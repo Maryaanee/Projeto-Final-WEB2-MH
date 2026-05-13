@@ -74,7 +74,7 @@ O projeto consiste no desenvolvimento de um aplicativo de avaliação e recomend
 
 - [x] **Model criado com 4 campos:** ( Título, Sinopse, Data de lançamento, duração).
 - [x] **CRUD via shell:** Manipulação de dados via terminal.
-- [] **Admin configurado:** Interface para gerenciamento de filmes.
+- [x] **Admin configurado:** Interface para gerenciamento de filmes.
 - [] **Filtros no admin:** Filtragem por gênero, ano e avaliação.
 - [] **Listagem de filmes populares:** Exibição principal da aplicação.
 

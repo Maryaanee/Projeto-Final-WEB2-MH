@@ -116,3 +116,9 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
+
+# Define a página inicial após o login correto (pode ser a sua lista de filmes)
+LOGIN_REDIRECT_URL = '/' 
+
+# Define para onde o usuário vai após deslogar (redireciona para a tela de login)
+LOGOUT_REDIRECT_URL = '/accounts/login/'

@@ -76,6 +76,13 @@ O projeto consiste no desenvolvimento de um aplicativo de avaliação e recomend
 - [x] **CRUD via shell:** Manipulação de dados via terminal.
 - [x] **Admin configurado:** Interface para gerenciamento de filmes.
 - [x] **MVP e wireframes definidos.**
+- [x] Sistema de cadastro de usuários com foto de perfil funcionando
+- [x] Validação de e-mail via token (link aparece no console)
+- [x] Login/Logout funcionando
+- [x] Todas as páginas do trabalho final protegidas com @login_required
+- [x] Página home/dashboard mostrando informações do
+- [x] usuário logado
+- [x] O trabalho final continua funcionando, agora com autenticação
 - [] **Filtros no admin:** Filtragem por gênero, ano e avaliação.
 - [] **Listagem de filmes populares:** Exibição principal da aplicação.
 

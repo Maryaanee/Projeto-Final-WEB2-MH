@@ -117,8 +117,12 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
-# Define a página inicial após o login correto (pode ser a sua lista de filmes)
-LOGIN_REDIRECT_URL = '/' 
+import os
 
-# Define para onde o usuário vai após deslogar (redireciona para a tela de login)
-LOGOUT_REDIRECT_URL = '/accounts/login/'
+# Configurações de Login/Logout
+LOGIN_REDIRECT_URL = '/'  # Redireciona para a home após logar
+LOGOUT_REDIRECT_URL = '/accounts/login/'  # Redireciona para login ao deslogar
+
+# Configurações de Arquivos de Mídia (Upload de Fotos)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

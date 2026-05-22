@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <body>
+<h2>Cadastrar Novo Usuário</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Criar Conta</button>
+</form>
+<p>Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a></p>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Filmes</title>
+    <style>
+        /* Estilos Gerais do Painel */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #141414; /* Fundo escuro estilo streaming */
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* Barra do Topo (Perfil do Usuário) */
+        .perfil-topo {
+            background-color: #181818;
+            border: 1px solid #282828;
+            padding: 20px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 40px;
+        }
+
+        .usuario-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid #e50914; /* Detalhe em vermelho */
+        }
+
+        .avatar-nulo {
+            font-size: 12px;
+            color: #aaa;
+            max-width: 100px;
+            text-align: center;
+        }
+
+        .dados-texto h2 {
+            margin: 0 0 5px 0;
+            font-size: 20px;
+        }
+
+        .dados-texto p {
+            margin: 2px 0;
+            color: #aaaaaa;
+            font-size: 14px;
+        }
+
+        .btn-sair {
+            background-color: #e50914;
+            color: white;
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 14px;
+            transition: background 0.2s;
+        }
+
+        .btn-sair:hover {
+            background-color: #b80710;
+        }
+
+        /* Seção do Catálogo de Filmes */
+        .catalogo-titulo {
+            font-size: 24px;
+            margin-bottom: 20px;
+            border-left: 4px solid #e50914;
+            padding-left: 10px;
+        }
+
+        .grade-filmes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+            gap: 20px;
+        }
+
+        /* Cartão de Filme Temporário (Exemplo Visual) */
+        .filme-card {
+            background-color: #2f2f2f;
+            border-radius: 6px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.5);
+            text-align: center;
+            padding-bottom: 10px;
+        }
+
+        .filme-poster-fake {
+            background-color: #444;
+            height: 240px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="perfil-topo">
+        <div class="usuario-info">
+            {% if user.perfil.foto %}
+                <img src="{{ user.perfil.foto.url }}" alt="Foto de Perfil" class="avatar">
+            {% else %}
+                <div class="avatar-nulo">Nenhuma foto de perfil cadastrada</div>
+            {% endif %}
+            
+            <div class="dados-texto">
+                <h2>Bem-vindo, {{ user.username }}!</h2>
+                <p>E-mail: {{ user.email }}</p>
+                <p>Conta ativada? {{ user.perfil.email_confirmado|yesno:"Sim,Não" }}</p>
+            </div>
+        </div>
+        
+        <form method="post" action="{% url 'login' %}" style="margin: 0;">
+    {% csrf_token %}
+    <button type="submit" class="btn-sair" style="border: none; cursor: pointer;">Sair do sistema</button>
+</form>
+    </div>
+
+    <h3 class="catalogo-titulo">Meu Catálogo de Filmes</h3>
+    
+    <div class="grade-filmes">
+        <div class="filme-card">
+            <div class="filme-poster-fake">🎬 Poster do Filme</div>
+            <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 1</p>
+        </div>
+        <div class="filme-card">
+            <div class="filme-poster-fake">🎬 Poster do Filme</div>
+            <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 2</p>
+        </div>
+        <div class="filme-card">
+            <div class="filme-poster-fake">🎬 Poster do Filme</div>
+            <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 3</p>
+        </div>
+    </div>
+
+</body>
+</html>

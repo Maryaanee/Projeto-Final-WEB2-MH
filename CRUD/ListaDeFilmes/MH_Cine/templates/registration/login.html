@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html>
     <body>
-<h2>Login</h2>
+<h2>Entrar no Sistema</h2>
+
 <form method="post">
     {% csrf_token %}
     {{ form.as_p }}
-    <button type="submit">Entrar</button>
+    <button type="submit">Acessar</button>
 </form>
+<p>Não tem conta? <a href="{% url 'signup' %}">Cadastre-se</a></p>
     </body>
 </html>

@@ -1,12 +1,188 @@
+{% load static %}
 <!DOCTYPE html>
-<html>
-    <body>
-<h2>Cadastrar Novo Usuário</h2>
-<form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Criar Conta</button>
-</form>
-<p>Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a></p>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastrar Novo Usuário</title>
+    <style>
+        /* Reset básico de estilos */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 40px 20px; /* Espaçamento para não cortar em telas menores */
+        }
+
+        /* Imagem de fundo com o mosaico de filmes e escurecimento (Igual ao Login) */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+                        url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1920') no-repeat center center;
+            background-size: cover;
+            z-index: 1;
+            position: fixed; /* Mantém o fundo fixo ao rolar */
+        }
+
+        /* Centraliza e dá formato aos blocos principais */
+        form, h2, body > p {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        /* Título do Sistema */
+        h2 {
+            color: #ffffff;
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.8);
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* Estrutura dos parágrafos do formulário {{ form.as_p }} */
+        form p {
+            width: 100%;
+            margin-bottom: 20px;
+            text-align: left; /* Alinha o bloco para organizar a label */
+        }
+
+        /* Labels customizadas e visíveis para o Cadastro */
+        form p label {
+            display: block;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            margin-bottom: 8px;
+            padding-left: 15px;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Estilização das caixas de texto e uploads gerados pelo Django */
+        form p input, form p select, form p textarea {
+            width: 100%;
+            padding: 14px 20px;
+            background-color: rgba(255, 255, 255, 0.1); /* Efeito transparente */
+            border: 2px solid rgba(255, 255, 255, 0.7); /* Borda oval branca fina */
+            border-radius: 30px; /* Formato de pílula idêntico à imagem */
+            color: #fff;
+            font-size: 1.05rem;
+            outline: none;
+            transition: all 0.3s ease;
+        }
+
+        /* Ajuste específico para caixas de seleção de arquivo (Upload de Fotos) */
+        form p input[type="file"] {
+            border-radius: 15px;
+            padding: 10px;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+
+        /* Feedback visual ao clicar no input */
+        form p input:focus, form p select:focus {
+            background-color: rgba(255, 255, 255, 0.2);
+            border-color: #fff;
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+        }
+
+        /* Estilização para textos de ajuda do Django (ex: requisitos de senha) */
+        form p .helptext {
+            display: block;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+            margin-top: 5px;
+            padding-left: 15px;
+            line-height: 1.3;
+        }
+
+        /* Estilização para erros de validação do Django */
+        .errorlist {
+            list-style: none;
+            color: #ff4a4a;
+            font-size: 0.85rem;
+            text-align: left;
+            margin-bottom: 10px;
+            padding-left: 15px;
+        }
+
+        /* Botão de Criar Conta (Vermelho Escuro) */
+        form button[type="submit"] {
+            display: block;
+            width: 60%; /* Menor que os inputs, assim como no login */
+            margin: 30px auto 10px auto;
+            padding: 12px;
+            background-color: #a61c1c; /* Tom vermelho escuro */
+            color: #fff;
+            border: none;
+            border-radius: 30px;
+            font-size: 1.2rem;
+            font-weight: bold;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+            transition: background-color 0.2s ease, transform 0.1s ease;
+        }
+
+        /* Efeitos do botão */
+        form button[type="submit"]:hover {
+            background-color: #bd2424;
+        }
+
+        form button[type="submit"]:active {
+            transform: scale(0.98);
+        }
+
+        /* Texto inferior (Já tem uma conta? Faça login aqui) */
+        body > p {
+            margin-top: 25px;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.6);
+        }
+
+        /* Link do Login */
+        body > p a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.2s ease;
+        }
+
+        body > p a:hover {
+            text-decoration: underline;
+            color: #bd2424; /* Destaca em vermelho ao passar o mouse */
+        }
+    </style>
+</head>
+<body>
+
+    <h2>Cadastrar Novo Usuário</h2>
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Criar Conta</button>
+    </form>
+    
+    <p>Já tem uma conta? <a href="{% url 'login' %}">Faça login aqui</a></p>
+
 </body>
 </html>

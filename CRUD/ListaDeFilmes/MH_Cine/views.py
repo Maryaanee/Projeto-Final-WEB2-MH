@@ -11,6 +11,18 @@ from django.contrib.auth.decorators import login_required
 
 @login_required 
 def home(request):
+    perfil = None
+    if request.user.is_authenticated:
+        # Verifica de forma segura se o usuário tem o objeto perfil
+        if hasattr(request.user, 'perfil'):
+            perfil = request.user.perfil
+        else:
+            # Se for um superuser ou usuário sem perfil, podemos criar um ou deixar None
+            perfil = None 
+            
+    # O resto do seu código da view continua igual...
+    # Lembre-se de passar o 'perfil' no seu context se o seu HTML precisar dele
+    return render(request, 'home.html', {'perfil': perfil})
     if not request.user.perfil.email_confirmado:
         return render(request, 'aguardando_confirmacao.html')
     return render(request, 'home.html')

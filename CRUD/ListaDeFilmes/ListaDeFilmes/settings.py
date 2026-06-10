@@ -120,7 +120,7 @@ STATIC_URL = 'static/'
 import os
 
 # Configurações de Login/Logout
-LOGIN_REDIRECT_URL = '/home/'
+LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = '/login/'
 
 LOGIN_URL = '/accounts/login/'

@@ -6,6 +6,7 @@ class Filme(models.Model):
     sinopse = models.CharField(max_length=500)        # Texto (VARCHAR)
     duracao = models.IntegerField()                 # Número Inteiro
     data_lancamento = models.DateField()
+    foto = models.ImageField(upload_to='capas/', null=True, blank=True)
 
     def __str__(self):
         return self.titulo

@@ -134,10 +134,17 @@
     <h3 class="catalogo-titulo">Meu Catálogo de Filmes</h3>
     
     <div class="grade-filmes">
-        <div class="filme-card">
-            <div class="filme-poster-fake">🎬 Poster do Filme</div>
-            <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 1</p>
-        </div>
+        {% for filme in filmes %}
+            <div class="filme-card">
+                {% if filme.foto %}
+                    <img src="{{filme.foto}}" alt="Foto do filme">
+                {% else %}
+                    <div class="filme-poster-fake">🎬 Poster do Filme</div>
+                {% endif %}                
+                
+                <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">{{filme.titulo}}</p>
+            </div>
+        {%endfor%}
         <div class="filme-card">
             <div class="filme-poster-fake">🎬 Poster do Filme</div>
             <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 2</p>

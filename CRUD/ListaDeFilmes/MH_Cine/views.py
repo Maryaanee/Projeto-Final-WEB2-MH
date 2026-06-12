@@ -5,7 +5,7 @@ from django.contrib.auth.tokens import default_token_generator
 from django.utils.http import urlsafe_base64_encode
 from django.utils.encoding import force_bytes
 from .forms import CadastroForm
-from .models import Perfil
+from .models import Perfil, Filme
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.decorators import login_required
 
@@ -20,9 +20,12 @@ def home(request):
             # Se for um superuser ou usuário sem perfil, podemos criar um ou deixar None
             perfil = None 
             
+    filmes = Filme.objects.all()
+    for filme in filmes:
+        print(filme)
     # O resto do seu código da view continua igual...
     # Lembre-se de passar o 'perfil' no seu context se o seu HTML precisar dele
-    return render(request, 'home.html', {'perfil': perfil})
+    return render(request, 'home.html', {'perfil': perfil, 'filmes': filmes})
     if not request.user.perfil.email_confirmado:
         return render(request, 'aguardando_confirmacao.html')
     return render(request, 'home.html')

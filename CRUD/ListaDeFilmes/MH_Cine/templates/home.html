@@ -95,7 +95,18 @@
             box-shadow: 0 4px 8px rgba(0,0,0,0.5);
             text-align: center;
             padding-bottom: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 310px;
         }
+        
+        .filme-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover; 
+    display: block;
+}
 
         .filme-poster-fake {
             background-color: #444;
@@ -106,6 +117,37 @@
             color: #888;
             font-size: 14px;
         }
+
+            /* Container das estrelas */
+.estrelas-container {
+    display: flex;
+    justify-content: center;
+    gap: 4px;
+    margin: 5px 0;
+}
+
+/* Estilo base da estrela (cinza por padrão) */
+.estrela {
+    font-size: 16px;
+    color: #444444; /* Cor da estrela apagada */
+}
+
+/* Classe que vai pintar a estrela de dourado/amarelo */
+.estrela.ativa {
+    color: #ffc107; /* Cor da estrela acessa */
+    text-shadow: 0 0 5px rgba(255, 193, 7, 0.5);
+}
+
+/* Texto da nota numérica ao lado */
+.nota-texto {
+    font-size: 12px;
+    color: #aaaaaa;
+    margin-left: 6px;
+    font-weight: bold;
+}
+
+
+
     </style>
 </head>
 <body>
@@ -137,22 +179,32 @@
         {% for filme in filmes %}
             <div class="filme-card">
                 {% if filme.foto %}
-                    <img src="{{filme.foto}}" alt="Foto do filme">
+                    <img src="{{filme.foto.url}}" alt="Foto do filme">
                 {% else %}
                     <div class="filme-poster-fake">🎬 Poster do Filme</div>
                 {% endif %}                
                 
-                <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">{{filme.titulo}}</p>
+               
+                <p style="font-size: 14px; margin: 8px 0 0 0; font-weight: bold; padding: 0 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+    {{ filme.titulo }}
+</p>
+
+<div class="estrelas-container">
+    <span class="estrela {% if filme.nota >= 2 %}ativa{% endif %}">★</span>
+    
+    <span class="estrela {% if filme.nota >= 4 %}ativa{% endif %}">★</span>
+    
+    <span class="estrela {% if filme.nota >= 6 %}ativa{% endif %}">★</span>
+    
+    <span class="estrela {% if filme.nota >= 8 %}ativa{% endif %}">★</span>
+    
+    <span class="estrela {% if filme.nota >= 10 %}ativa{% endif %}">★</span>
+
+    <span class="nota-texto">({{ filme.nota }})</span>
+</div>
             </div>
         {%endfor%}
-        <div class="filme-card">
-            <div class="filme-poster-fake">🎬 Poster do Filme</div>
-            <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 2</p>
-        </div>
-        <div class="filme-card">
-            <div class="filme-poster-fake">🎬 Poster do Filme</div>
-            <p style="font-size: 14px; margin: 10px 0 5px 0; font-weight: bold;">Filme Exemplo 3</p>
-        </div>
+        
     </div>
 
 </body>

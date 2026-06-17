@@ -7,6 +7,7 @@ class Filme(models.Model):
     duracao = models.IntegerField()                 # Número Inteiro
     data_lancamento = models.DateField()
     foto = models.ImageField(upload_to='capas/', null=True, blank=True)
+    nota = models.IntegerField() 
 
     def __str__(self):
         return self.titulo

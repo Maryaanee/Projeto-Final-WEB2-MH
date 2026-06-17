@@ -9,26 +9,26 @@ from .models import Perfil, Filme
 from django.utils.http import urlsafe_base64_decode
 from django.contrib.auth.decorators import login_required
 
+
 @login_required 
 def home(request):
-    perfil = None
-    if request.user.is_authenticated:
-        # Verifica de forma segura se o usuário tem o objeto perfil
-        if hasattr(request.user, 'perfil'):
-            perfil = request.user.perfil
-        else:
-            # Se for um superuser ou usuário sem perfil, podemos criar um ou deixar None
-            perfil = None 
+    # 1. Primeiro, verifica com segurança se o usuário logado tem e-mail confirmado
+    if hasattr(request.user, 'perfil'):
+        if not request.user.perfil.email_confirmado:
+            return render(request, 'aguardando_confirmacao.html')
+        perfil = request.user.perfil
+    else:
+        perfil = None 
             
+    # 2. Busca os filmes no banco de dados
     filmes = Filme.objects.all()
+    
+    # Debug opcional para ver no terminal se os filmes estão vindo com imagem cadastrada
     for filme in filmes:
-        print(filme)
-    # O resto do seu código da view continua igual...
-    # Lembre-se de passar o 'perfil' no seu context se o seu HTML precisar dele
+        print(f"Filme: {filme.titulo} | Foto: {filme.foto}")
+    
+    # 3. O ÚNICO return render deve ficar aqui no final da função!
     return render(request, 'home.html', {'perfil': perfil, 'filmes': filmes})
-    if not request.user.perfil.email_confirmado:
-        return render(request, 'aguardando_confirmacao.html')
-    return render(request, 'home.html')
 
 def cadastrar(request):
     if request.method == 'POST':

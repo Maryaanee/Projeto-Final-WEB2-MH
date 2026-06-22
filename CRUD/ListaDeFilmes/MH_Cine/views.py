@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import get_object_or_404, render, redirect
 from django.core.mail import send_mail
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
@@ -11,6 +11,7 @@ from django.contrib.auth.decorators import login_required
 
 
 @login_required 
+@login_required 
 def home(request):
     # 1. Primeiro, verifica com segurança se o usuário logado tem e-mail confirmado
     if hasattr(request.user, 'perfil'):
@@ -20,12 +21,38 @@ def home(request):
     else:
         perfil = None 
             
-    # 2. Busca os filmes no banco de dados
+    # 2. Busca TODOS os filmes no banco de dados inicialmente
     filmes = Filme.objects.all()
     
-    # Debug opcional para ver no terminal se os filmes estão vindo com imagem cadastrada
+    # --- INÍCIO DO SISTEMA DE FILTROS E BUSCA ---
+    busca_nome = request.GET.get('pesquisa')
+    filtro_genero = request.GET.get('genero')
+    filtro_ano = request.GET.get('ano')
+    filtro_avaliacao = request.GET.get('avaliacao')
+
+    # Filtro por Nome (Barra de Pesquisa)
+    if busca_nome:
+        filmes = filmes.filter(titulo__icontains=busca_nome)
+
+    # Filtro por Gênero
+    if filtro_genero:
+        filmes = filmes.filter(genero__iexact=filtro_genero)
+
+    # Filtro por Ano
+    if filtro_ano:
+        if filtro_ano == 'antigos':
+            filmes = filmes.filter(ano__lt=2024)  # Menor que 2024
+        else:
+            filmes = filmes.filter(ano=filtro_ano)
+
+    # Filtro por Avaliação Mínima
+    if filtro_avaliacao:
+        filmes = filmes.filter(nota__gte=filtro_avaliacao)  # Maior ou igual à nota escolhida
+    # --- FIM DO SISTEMA DE FILTROS ---
+
+    # Debug opcional para ver no terminal se os filmes filtrados estão vindo com imagem cadastrada
     for filme in filmes:
-        print(f"Filme: {filme.titulo} | Foto: {filme.foto}")
+        print(f"Filme Filtrado: {filme.titulo} | Foto: {filme.foto}")
     
     # 3. O ÚNICO return render deve ficar aqui no final da função!
     return render(request, 'home.html', {'perfil': perfil, 'filmes': filmes})
@@ -78,3 +105,7 @@ def ativar_conta(request, uidb64, token):
     else:
         return render(request, 'token_invalido.html')
     
+def detalhes_filme(request, filme_id):
+    # Busca o filme pelo ID ou mostra página de erro 404 se não achar
+    filme = get_object_or_404(Filme, id=filme_id)
+    return render(request, 'detalhes.html', {'filme': filme})

@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ filme.titulo }} - Detalhes</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #0F1F41; /* Fundo idêntico ao da imagem */
+            color: #ffffff;
+            margin: 0;
+            padding: 40px 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            box-sizing: border-box;
+        }
+
+        /* Container Principal do Filme */
+        .container-detalhes {
+            background-color: #111e38; /* Tom azul escuro levemente diferente do fundo */
+            border-radius: 12px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.6);
+            display: flex;
+            max-width: 900px;
+            width: 100%;
+            overflow: hidden;
+        }
+
+        /* Lado Esquerdo - Informações */
+        .info-secao {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .filme-titulo {
+            font-size: 36px;
+            font-weight: bold;
+            margin: 0 0 15px 0;
+        }
+
+        /* Tags de Informação (Ano, Duração, Gênero) */
+        .tags-container {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            background-color: #213359;
+            color: #8fa6d0;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Sistema de Estrelas */
+        .estrelas-container {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 25px;
+        }
+
+        .estrela {
+            color: #444;
+            font-size: 20px;
+        }
+
+        .estrela.ativa {
+            color: #ffc107; /* Amarelo das estrelas */
+        }
+
+        .nota-texto {
+            font-size: 14px;
+            color: #8fa6d0;
+            margin-left: 5px;
+        }
+
+        /* Sinopse */
+        .sinopse-texto {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #b2c4e6;
+            margin: 0 0 30px 0;
+        }
+
+        /* Botões de Ação */
+        .botoes-container {
+            display: flex;
+            gap: 15px;
+        }
+
+        .btn {
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: bold;
+            text-transform: uppercase;
+            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            transition: opacity 0.2s;
+        }
+
+        .btn:hover {
+            opacity: 0.9;
+        }
+
+        .btn-avaliar {
+            background-color: #ffc107; /* Amarelo da imagem */
+            color: #0f1f41;
+        }
+
+        .btn-lista {
+            background-color: transparent;
+            color: #ffffff;
+            border: 1px solid #3d568c;
+        }
+
+        .btn-voltar {
+            background-color: transparent;
+            color: #8fa6d0;
+            border: none;
+            margin-top: 20px;
+            text-align: left;
+            padding: 0;
+            font-size: 13px;
+        }
+
+        /* Lado Direito - Imagem Poster */
+        .poster-secao {
+            width: 45%;
+            position: relative;
+        }
+
+        .poster-secao img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .poster-fake {
+            width: 100%;
+            height: 100%;
+            background-color: #222;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+        }
+
+        /* Responsividade para celular */
+        @media (max-width: 768px) {
+            .container-detalhes {
+                flex-direction: column-reverse;
+            }
+            .poster-secao {
+                width: 100%;
+                height: 300px;
+            }
+            .info-secao {
+                padding: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container-detalhes">
+        
+        <div class="info-secao">
+            <h1 class="filme-titulo">{{ filme.titulo }}</h1>
+            
+            <div class="tags-container">
+                <span class="tag">{{ filme.data_lancamento}}</span>
+                <span class="tag">{{ filme.duracao }} MIN</span>
+                <span class="tag">{{ filme.genero }}</span>
+                <span class="tag">{% if filme.classificacao %}{{ filme.classificacao }}{% else %}Livre{% endif %}</span> </div>
+            
+            <div class="estrelas-container">
+                <span class="estrela {% if filme.nota >= 2 %}ativa{% endif %}">★</span>
+                <span class="estrela {% if filme.nota >= 4 %}ativa{% endif %}">★</span>
+                <span class="estrela {% if filme.nota >= 6 %}ativa{% endif %}">★</span>
+                <span class="estrela {% if filme.nota >= 8 %}ativa{% endif %}">★</span>
+                <span class="estrela {% if filme.nota >= 10 %}ativa{% endif %}">★</span>
+                <span class="nota-texto">({{ filme.nota }}/10)</span>
+            </div>
+            
+            <p class="sinopse-texto">
+                {% if filme.sinopse %}
+                    {{ filme.sinopse }}
+                {% else %}
+                    Nenhuma sinopse disponível para este filme ainda.
+                {% endif %}
+            </p>
+            
+            <div class="botoes-container">
+                <button class="btn btn-avaliar">Avaliar Filme</button>
+                <button class="btn btn-lista">Salvar na Lista</button>
+            </div>
+
+            <a href="{% url 'home' %}" class="btn-voltar">← Voltar para o catálogo</a>
+        </div>
+        
+        <div class="poster-secao">
+            {% if filme.foto %}
+                <img src="{{ filme.foto.url }}" alt="Poster de {{ filme.titulo }}">
+            {% else %}
+                <div class="poster-fake">🎬 Sem Foto</div>
+            {% endif %}
+        </div>
+
+
+    </div>
+
+</body>
+</html>

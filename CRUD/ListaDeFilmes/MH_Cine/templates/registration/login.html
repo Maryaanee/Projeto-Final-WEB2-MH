@@ -25,7 +25,7 @@
             position: relative;
         }
 
-        /* Imagem de fundo com o mosaico de filmes e escurecimento */
+         /* Imagem de fundo local sem o escurecimento */
         body::before {
             content: "";
             position: absolute;
@@ -33,11 +33,19 @@
             left: 0;
             width: 100%;
             height: 100%;
-            
-            background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
-                        url('https://images.unsplash.com/photo-1489599849927-2ee91cede3ba?q=80&w=1920') no-repeat center center;
-            background-size: cover;
+            background: url("{% static 'imagens/backmhcine.png' %}") no-repeat center center; 
             z-index: 1;
+            position: fixed; /* Mantém o fundo fixo ao rolar */
+        }
+
+        .logo-site-login {
+            position: relative;
+            z-index: 2;
+            width: 100px;         /* Definição de tamanho igual para ficar quadrada */
+            height: 100px;
+            object-fit: cover;    /* Garante que o conteúdo não distorça */
+            margin-bottom: 20px;  /* Afasta a logo do título */
+            border-radius: 12px;
         }
 
         /* Centraliza e dá formato aos blocos principais */
@@ -143,8 +151,11 @@
             color: #bd2424; /* Destaca em vermelho ao passar o mouse */
         }
     </style>
+    {% load static %}
 </head>
 <body>
+
+    <img src="{% static 'imagens/mhcinequad.jpg' %}" alt="Logo CineClass" class="logo-site-login">
 
     <h2>Entrar no Sistema</h2>
 

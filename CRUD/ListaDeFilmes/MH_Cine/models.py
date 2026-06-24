@@ -2,12 +2,14 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Filme(models.Model):
-    titulo = models.CharField(max_length=100)       # Texto (VARCHAR)
-    sinopse = models.CharField(max_length=500)        # Texto (VARCHAR)
-    duracao = models.IntegerField()                 # Número Inteiro
+    titulo = models.CharField(max_length=100)       
+    sinopse = models.CharField(max_length=500)       
+    duracao = models.IntegerField()                
     data_lancamento = models.DateField()
     foto = models.ImageField(upload_to='capas/', null=True, blank=True)
-    nota = models.IntegerField() 
+    nota = models.IntegerField()
+    genero = models.CharField(max_length=500)
+    classificacao = models.CharField(max_length=100)
 
     def __str__(self):
         return self.titulo

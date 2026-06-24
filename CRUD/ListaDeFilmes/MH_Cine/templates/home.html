@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -251,17 +252,25 @@
 
     <nav class="menu-catalogo">
         <div class="menu-container">
-            <div class="logo-site">🎬 CineClass</div>
+          <div class="logo-site">
+       <a href="/">
+           <img src="{% static 'imagens/mhcine.jpg' %}" alt="CineClass Logo" style="height: 40px; width: auto; display: block;">
+       </a>
+         </div>
             
             <form method="get" action="." class="form-filtros">
                 <input type="text" name="pesquisa" placeholder="Pesquisar filme..." value="{{ request.GET.pesquisa|default:'' }}" class="input-busca">
                 
                 <select name="genero" class="select-filtro" onchange="this.form.submit()">
                     <option value="">Gênero (Todos)</option>
-                    <option value="acao" {% if request.GET.genero == 'acao' %}selected{% endif %}>Ação</option>
-                    <option value="comedia" {% if request.GET.genero == 'comedia' %}selected{% endif %}>Comédia</option>
-                    <option value="drama" {% if request.GET.genero == 'drama' %}selected{% endif %}>Drama</option>
-                    <option value="terror" {% if request.GET.genero == 'terror' %}selected{% endif %}>Terror</option>
+                    <option value="Ação" {% if request.GET.genero == 'Ação' %}selected{% endif %}>Ação</option>
+                    <option value="Comédia" {% if request.GET.genero == 'Comédia' %}selected{% endif %}>Comédia</option>
+                    <option value="Drama" {% if request.GET.genero == 'Drama' %}selected{% endif %}>Drama</option>
+                    <option value="Terror" {% if request.GET.genero == 'Terror' %}selected{% endif %}>Terror</option>
+                    <option value="Aventura" {% if request.GET.genero == 'Aventura' %}selected{% endif %}>Aventura</option>
+                    <option value="Fantasia" {% if request.GET.genero == 'Fantasia' %}selected{% endif %}>Fantasia</option>
+                    <option value="Biografia" {% if request.GET.genero == 'Biografia' %}selected{% endif %}>Biografia</option>
+                    <option value="Horror" {% if request.GET.genero == 'Horror' %}selected{% endif %}>Horror</option>
                 </select>
 
                 <select name="ano" class="select-filtro" onchange="this.form.submit()">
@@ -277,6 +286,16 @@
                     <option value="9" {% if request.GET.avaliacao == '9' %}selected{% endif %}>⭐⭐⭐⭐⭐ (9+)</option>
                     <option value="7" {% if request.GET.avaliacao == '7' %}selected{% endif %}>⭐⭐⭐⭐ (7+)</option>
                     <option value="5" {% if request.GET.avaliacao == '5' %}selected{% endif %}>⭐⭐⭐ (5+)</option>
+                </select>
+
+                <select name="classificacao" class="select-filtro" onchange="this.form.submit()">
+                    <option value="">Classificação (Todas)</option>
+                    <option value="Livre" {% if request.GET.classificacao == 'Livre' %}selected{% endif %}>Livre</option>
+                    <option value="10" {% if request.GET.classificacao == '10' %}selected{% endif %}>10 anos</option>
+                    <option value="12" {% if request.GET.classificacao == '12' %}selected{% endif %}>12 anos</option>
+                    <option value="14" {% if request.GET.classificacao == '14' %}selected{% endif %}>14 anos</option>
+                    <option value="16" {% if request.GET.classificacao == '16' %}selected{% endif %}>16 anos</option>
+                    <option value="18" {% if request.GET.classificacao == '18' %}selected{% endif %}>18 anos</option>
                 </select>
                 
                 <button type="submit" style="display: none;"></button>

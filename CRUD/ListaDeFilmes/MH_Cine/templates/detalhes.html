@@ -183,10 +183,10 @@
             <h1 class="filme-titulo">{{ filme.titulo }}</h1>
             
             <div class="tags-container">
-                <span class="tag">{{ filme.ano }}</span>
+                <span class="tag">{{ filme.data_lancamento}}</span>
                 <span class="tag">{{ filme.duracao }} MIN</span>
                 <span class="tag">{{ filme.genero }}</span>
-                <span class="tag">Livre</span> </div>
+                <span class="tag">{% if filme.classificacao %}{{ filme.classificacao }}{% else %}Livre{% endif %}</span> </div>
             
             <div class="estrelas-container">
                 <span class="estrela {% if filme.nota >= 2 %}ativa{% endif %}">★</span>
@@ -220,6 +220,7 @@
                 <div class="poster-fake">🎬 Sem Foto</div>
             {% endif %}
         </div>
+
 
     </div>
 

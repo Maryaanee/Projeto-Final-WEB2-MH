@@ -29,10 +29,14 @@ def home(request):
     filtro_genero = request.GET.get('genero')
     filtro_ano = request.GET.get('ano')
     filtro_avaliacao = request.GET.get('avaliacao')
+    filtro_classificacao = request.GET.get('classificacao')
 
     # Filtro por Nome (Barra de Pesquisa)
     if busca_nome:
         filmes = filmes.filter(titulo__icontains=busca_nome)
+
+    if filtro_classificacao:
+        filmes = filmes.filter(classificacao__iexact=filtro_classificacao)
 
     # Filtro por Gênero
     if filtro_genero:
@@ -41,9 +45,9 @@ def home(request):
     # Filtro por Ano
     if filtro_ano:
         if filtro_ano == 'antigos':
-            filmes = filmes.filter(ano__lt=2024)  # Menor que 2024
+            filmes = filmes.filter(data_lancamento__year__lt=2024)
         else:
-            filmes = filmes.filter(ano=filtro_ano)
+            filmes = filmes.filter(data_lancamento__year=int(filtro_ano))
 
     # Filtro por Avaliação Mínima
     if filtro_avaliacao:

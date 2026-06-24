@@ -10,8 +10,8 @@
 ---
 
 ## 🛠️ Tecnologias Utilizadas
-- **Python 3.x**
-- **Django 4.x**
+- **Python**
+- **Django**
 - **SQLite**
 - **HTML5 / CSS3**
 
